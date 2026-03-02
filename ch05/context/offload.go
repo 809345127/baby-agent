@@ -66,7 +66,7 @@ func (s *OffloadStrategy) Run(ctx context.Context, engine *ContextEngine) error 
 		var b strings.Builder
 		b.WriteString(abstract)
 		b.WriteString("...")
-		b.WriteString(fmt.Sprintf("（更多内容已卸载，如需查看全文请使用 load_storage(key=%s) 工具）\n", key))
+		b.WriteString(fmt.Sprintf("（更多内容已卸载，如需查看全文请使用 load_storage(key=\"%s\") 工具）\n", key))
 		newContent := b.String()
 
 		// 修改原始消息链中的消息
