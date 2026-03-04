@@ -198,10 +198,10 @@ baby-agent/
 
 ```bash
 # 第一章：体验流式输出
-go run ./ch01 --stream -q "用 Go 语言写一个 Hello World"
+go run ./ch01/main --stream -q "用 Go 语言写一个 Hello World"
 
 # 第二章：工具调用示例
-go run ./ch02 -q "请读取 README.md 并总结项目目标"
+go run ./ch02/main -q "请读取 README.md 并总结项目目标"
 
 # 第三章：TUI 可视化
 go run ./ch03/tui

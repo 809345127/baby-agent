@@ -27,12 +27,12 @@ func NonStreamingRequestSDK(ctx context.Context, modelConf shared.ModelConfig, q
 	}
 
 	if len(resp.Choices) == 0 {
-		log.Printf("no choices returned, resp: %v", resp)
+		log.Printf("no choices returned, resp: %s", resp.RawJSON())
 		return
 	}
 
-	log.Printf("resp content: %v", resp.Choices[0].Message.Content)
-	log.Printf("token usage: %+v", resp.Usage)
+	log.Printf("resp content: %s", resp.Choices[0].Message.Content)
+	log.Printf("token usage: %s", resp.Usage.RawJSON())
 }
 
 func StreamingRequestSDK(ctx context.Context, modelConf shared.ModelConfig, query string) {
@@ -49,9 +49,9 @@ func StreamingRequestSDK(ctx context.Context, modelConf shared.ModelConfig, quer
 
 	for stream.Next() {
 		chunk := stream.Current()
-		log.Printf("stream chunk: %v", chunk)
+		log.Printf("stream chunk: %s", chunk.RawJSON())
 		if chunk.Usage.TotalTokens != 0 {
-			log.Printf("token usage: %+v", chunk.Usage)
+			log.Printf("token usage: %s", chunk.Usage.RawJSON())
 		}
 	}
 

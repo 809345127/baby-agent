@@ -210,13 +210,13 @@ type Tool interface {
 进入项目根目录，执行：
 
 ```bash
-go run ./ch02 -q "请读取 README.md 并总结项目目标"
+go run ./ch02/main -q "请读取 README.md 并总结项目目标"
 ```
 
 你也可以尝试更“能动手”的指令：
 
 ```bash
-go run ./ch02 -q "在 ch02 目录下创建一个 TODO.md，内容为 1. 研究 agent"
+go run ./ch02/main -q "在 ch02 目录下创建一个 TODO.md，内容为 1. 研究 agent"
 ```
 
 ---
