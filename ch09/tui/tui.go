@@ -130,6 +130,12 @@ func (m *TuiViewModel) Update(msg tea.Msg) (tea.Model, tea.Cmd) {
 		return m, nil
 	case tea.KeyPressMsg:
 		return m.handleKey(msg)
+	case tea.PasteMsg:
+		// Handle paste from clipboard
+		if m.state == stateIdle {
+			m.input += msg.Content
+		}
+		return m, nil
 	case streamMsg:
 		return m.handleStreamMsg(msg)
 	case streamClosedMsg:
