@@ -45,8 +45,15 @@ export const babyAgentThreadListAdapter: RemoteThreadListAdapter = {
   },
 
   async rename(remoteId, newTitle) {
-    const result = await renameThread(remoteId, newTitle)
-    assertThreadOperationSupported(result.message, 'rename', remoteId, THREAD_OPERATION_SUPPORT.rename)
+    if (!THREAD_OPERATION_SUPPORT.rename) {
+      assertThreadOperationSupported(
+        'renameThread is not implemented by the backend yet',
+        'rename',
+        remoteId,
+        false,
+      )
+    }
+    await renameThread(remoteId, newTitle)
   },
 
   async archive(remoteId) {
@@ -64,8 +71,15 @@ export const babyAgentThreadListAdapter: RemoteThreadListAdapter = {
   },
 
   async delete(remoteId) {
-    const result = await deleteThread(remoteId)
-    assertThreadOperationSupported(result.message, 'delete', remoteId, THREAD_OPERATION_SUPPORT.delete)
+    if (!THREAD_OPERATION_SUPPORT.delete) {
+      assertThreadOperationSupported(
+        'deleteThread is not implemented by the backend yet',
+        'delete',
+        remoteId,
+        false,
+      )
+    }
+    await deleteThread(remoteId)
   },
 
   async generateTitle(_remoteId, unstable_messages) {

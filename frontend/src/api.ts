@@ -64,19 +64,19 @@ interface StreamThreadRunArgs {
 export type ThreadOperation = 'rename' | 'archive' | 'delete'
 
 export interface ThreadOperationUnsupported {
-  ok: false
-  unsupported: true
-  operation: ThreadOperation
+	ok: false
+	unsupported: true
+	operation: ThreadOperation
   threadId: string
   message: string
 }
 
 export type ThreadOperationResult = ThreadOperationUnsupported
 
-export const THREAD_OPERATION_SUPPORT: Record<ThreadOperation, false> = {
-  rename: false,
+export const THREAD_OPERATION_SUPPORT: Record<ThreadOperation, boolean> = {
+  rename: true,
   archive: false,
-  delete: false,
+  delete: true,
 }
 
 export async function fetchThreads(): Promise<ConversationVO[]> {
@@ -94,17 +94,24 @@ export async function createThread(title = 'New Chat'): Promise<ConversationVO> 
   return json.data
 }
 
-export async function renameThread(threadId: string, title: string): Promise<ThreadOperationResult> {
-  void title
-  return unsupportedThreadOperation('rename', threadId)
+export async function renameThread(threadId: string, title: string): Promise<ConversationVO> {
+  const json = await requestJSON<ConversationVO>(`${BASE}/conversation/${threadId}`, {
+    method: 'PATCH',
+    headers: { 'Content-Type': 'application/json' },
+    body: JSON.stringify({ title }),
+  })
+  if (!json.data) throw new Error('Conversation rename did not return updated data')
+  return json.data
 }
 
 export async function archiveThread(threadId: string): Promise<ThreadOperationResult> {
   return unsupportedThreadOperation('archive', threadId)
 }
 
-export async function deleteThread(threadId: string): Promise<ThreadOperationResult> {
-  return unsupportedThreadOperation('delete', threadId)
+export async function deleteThread(threadId: string): Promise<void> {
+  await requestJSON<{ conversation_id: string }>(`${BASE}/conversation/${threadId}`, {
+    method: 'DELETE',
+  })
 }
 
 export async function fetchThreadMessages(threadId: string): Promise<ChatMessageVO[]> {

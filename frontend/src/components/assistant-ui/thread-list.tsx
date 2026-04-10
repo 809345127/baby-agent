@@ -59,11 +59,14 @@ export default function AssistantThreadList() {
                 key={threadListItem.id}
                 style={{
                   marginBottom: 4,
+                  display: 'flex',
+                  alignItems: 'center',
+                  gap: 4,
                 }}
               >
                 <ThreadListItemPrimitive.Trigger
                   style={{
-                    width: '100%',
+                    flex: 1,
                     textAlign: 'left',
                     background: active ? 'rgba(124,58,237,0.15)' : 'transparent',
                     border: active
@@ -81,6 +84,23 @@ export default function AssistantThreadList() {
                 >
                   <ThreadListItemPrimitive.Title />
                 </ThreadListItemPrimitive.Trigger>
+                {threadListItem.remoteId ? (
+                  <ThreadListItemPrimitive.Delete
+                    title="Delete Conversation"
+                    style={{
+                      background: 'none',
+                      border: 'none',
+                      cursor: 'pointer',
+                      color: 'var(--text-muted)',
+                      padding: '6px 8px',
+                      borderRadius: 6,
+                      fontSize: 14,
+                      lineHeight: 1,
+                    }}
+                  >
+                    ×
+                  </ThreadListItemPrimitive.Delete>
+                ) : null}
               </ThreadListItemPrimitive.Root>
             )
           }}
